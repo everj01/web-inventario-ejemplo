@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* Paleta Metro: planos, cuadrados, sin sombras ni degradados. */
+@theme {
+  --color-tinta: #1b1b1b;
+  --color-gris: #f3f3f3;
+  --color-borde: #d4d4d4;
+  --color-acento: #0063b1;
+  --color-verde: #107c10;
+  --color-ambar: #ca5010;
+  --color-rojo: #c50f1f;
+  --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+html { font-family: var(--font-sans); }
+body { background: #fff; color: var(--color-tinta); }
+
+/* Controles chicos y cuadrados: entran muchos en poco espacio. */
+.campo {
+  @apply w-full border border-borde bg-white px-2 py-1 text-sm outline-none;
+}
+.campo:focus { @apply border-acento ring-1 ring-acento; }
+.etiqueta { @apply mb-0.5 block text-xs text-tinta/60; }
+.error { @apply block text-xs text-rojo; }
+
+.btn { @apply border border-borde bg-white px-3 py-1 text-sm hover:bg-gris disabled:opacity-50; }
+.btn-acento { @apply border border-acento bg-acento px-3 py-1 text-sm text-white hover:bg-acento/90 disabled:opacity-50; }
+.btn-icono { @apply border border-borde bg-white px-2 text-sm leading-6 hover:bg-gris; }
+
+.tile { @apply border border-borde p-3; }
+.tabla th { @apply border-b border-borde px-2 py-1.5 text-left text-xs font-normal text-tinta/60; }
+.tabla td { @apply border-b border-borde/60 px-2 py-1.5 align-middle; }
+
+@media print {
+  .no-imprimir { display: none !important; }
+}
+
+/* Vida Metro: mosaicos que respiran y entran en cascada, sin sombras ni degradados. */
+@keyframes tile-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes tile-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.045); }
+}
+@keyframes accent-draw {
+  from { width: 0; }
+  to { width: 2.5rem; }
+}
+
+.mosaico { animation: tile-in 0.5s ease-out backwards, tile-breathe 6s ease-in-out infinite; }
+.trazo-acento {
+  width: 0;
+  animation: accent-draw 0.6s 0.2s ease-out forwards;
+}
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(12px, -18px) scale(1.06); }
+}
+.blob-flotar { animation: blob-float 10s ease-in-out infinite; }
+
+@keyframes feature-in {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.feature-in { animation: feature-in 0.5s ease-out backwards; }
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.count-up { animation: count-up 0.6s 0.4s ease-out backwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mosaico, .blob-flotar, .feature-in, .count-up { animation: none; opacity: 1; }
+  .trazo-acento { animation: none; opacity: 1; width: 2.5rem; }
+}
